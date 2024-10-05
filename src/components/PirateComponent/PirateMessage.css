@@ -1,0 +1,36 @@
+.pirate-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap; 
+}
+
+.pirate-text {
+    flex: 1;
+    min-width: 200px; 
+}
+
+.pirate-image {
+    flex: 1;
+    min-width: 200px; /* Minimum width for the image */
+    display: flex; /* Make this a flex container */
+    align-items: center; 
+    justify-content: center; 
+}
+
+.pirate-image img {
+    max-height: 300px; /* Make the image fit within the height of the container */
+    height: auto; 
+    width: auto; 
+}
+
+@media (max-width: 768px) {
+    .pirate-container {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: center; /* Center align items in the column */
+    }
+
+    .pirate-image {
+        margin-top: 20px; /* Add some space between the text and image on stack */
+    }
+}

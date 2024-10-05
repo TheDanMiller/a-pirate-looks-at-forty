@@ -1,0 +1,52 @@
+.renee-form-container {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjust spacing between form elements */
+}
+
+.reneeForm-introText-margin {
+    margin: 0;
+}
+
+.reneeForm-header-margin {
+    margin: 10px 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+    
+label {
+    margin: 5px 0px; /* Spacing between label and input */
+    font-weight: bolder;
+}
+
+span[role="alert"] {
+    color: #00fffb;
+}
+
+textarea { 
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    margin-top: 10px; /* Add some space above the submit button */
+}
+
+::placeholder {
+    color: #ffffff;
+    opacity: .9; /* Firefox */
+  }
+
+.form-submit-button {
+    background: #0066A2;
+    color: white;
+    border-style: outset;
+    border-color: #0066A2;
+    height: 50px;
+    width: 100px;
+    font: bold15px arial,sans-serif;
+    text-shadow: none;
+}

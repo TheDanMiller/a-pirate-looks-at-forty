@@ -14,7 +14,7 @@ const ReneeForm = () => {
     return (
        <div className='renee-form-container'>
         <h2 className='reneeForm-header-margin'>Fill this out</h2>
-        <p className="reneeForm-introText-margin">Just fill out the parts of this you can. <strong>Please</strong> add a picture.</p>
+        <p className="reneeForm-introText-margin">Just fill out the parts of this you can. <strong>Please</strong> add a picture or two.</p>
         <form onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="name">Name*: </label>
 
@@ -57,6 +57,29 @@ const ReneeForm = () => {
                 placeholder="Share a memory of Renée."
                 {...register("origin")}
             />
+
+<label htmlFor="images">Upload Image(s):</label>
+            <input
+                type="file"
+                id="images"
+                accept="image/*"
+                multiple
+                {...register('images', { 
+                    validate: {
+                        maxSize: (files) => {
+                            if (files.length > 0) {
+                                for (let file of files) {
+                                    if (file.size > 5 * 1024 * 1024) {
+                                        return "Each file must be less than 3MB";
+                                    }
+                                }
+                            }
+                            return true;
+                        }
+                    } 
+                })}
+            />
+            {errors.images && <span role="alert">{errors.images.message}</span>}
             <input className="form-submit-button" type="submit" />
         </form>
        </div>

@@ -5,6 +5,9 @@ import "./PirateMessage.css";
 const PirateMessage = () => {
   return (
     <div className="pirate-container">
+            <div className="pirate-image">
+        <img src={pirateImage} alt="Renee the pirate and Dan as Quailman" />
+      </div>
       <div className="pirate-text">
         <p>
           Arrr, if ye be readin&apos; this, then ye likely know Renée. As ye be
@@ -19,9 +22,7 @@ const PirateMessage = () => {
           compiled into a scrapbook for Renée.
         </p>
       </div>
-      <div className="pirate-image">
-        <img src={pirateImage} alt="Renee the pirate and Dan as Quailman" />
-      </div>
+
     </div>
   );
 };

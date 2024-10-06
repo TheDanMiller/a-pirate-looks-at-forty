@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./ReneeForm.css";
+import { put } from '@vercel/blob';
 
 const ReneeForm = () => {
   const {
@@ -8,7 +9,22 @@ const ReneeForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    const name = data.name.replace(/\s/g, "")
+    try {
+      
+        const url = await put(`response/${name}`, data, { access: 'private' }).then(
+            console.log('File uploaded successfully:', url)
+        );
+      // Handle the response (e.g., store the URL in your database)
+      
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
   return (
     <div className="renee-form-container">

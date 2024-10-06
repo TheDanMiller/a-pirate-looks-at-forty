@@ -1,9 +1,8 @@
-import './App.css'
-import ReneeForm from './components/BirthdayForm/ReneeForm'
-import PirateMessage from './components/PirateComponent/PirateMessage'
+import "./App.css";
+import ReneeForm from "./components/BirthdayForm/ReneeForm";
+import PirateMessage from "./components/PirateComponent/PirateMessage";
 
 function App() {
-
   return (
     <>
       <div>
@@ -14,7 +13,7 @@ function App() {
         <ReneeForm />
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

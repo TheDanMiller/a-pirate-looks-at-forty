@@ -5,7 +5,7 @@ import "./PirateMessage.css";
 const PirateMessage = () => {
   return (
     <div className="pirate-container">
-            <div className="pirate-image">
+      <div className="pirate-image">
         <img src={pirateImage} alt="Renee the pirate and Dan as Quailman" />
       </div>
       <div className="pirate-text">

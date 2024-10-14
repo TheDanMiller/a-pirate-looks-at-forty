@@ -30,8 +30,9 @@ const ReneeForm = () => {
     <div className="renee-form-container">
       <h2 className="reneeForm-header-margin">Fill this out</h2>
       <p className="reneeForm-introText-margin">
-        Just fill out the parts of this you can. <strong>Please</strong> add a
-        picture or two.
+        Just fill out the parts of this you can. This will only be shared with Renée.
+        <br />
+        <strong>Required: </strong> your name, a birthday wish, and a picture of you and Renée (or just a picture of you).
       </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name">Name*: </label>

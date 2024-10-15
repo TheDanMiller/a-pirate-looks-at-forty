@@ -1,29 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./ReneeForm.css";
-import { put } from '@vercel/blob';
+import axios from "axios";
 
 const ReneeForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    const name = data.name.replace(/\s/g, "")
-    try {
-      
-        const url = await put(`response/${name}`, data, { access: 'private' }).then(
-            console.log('File uploaded successfully:', url)
-        );
-      // Handle the response (e.g., store the URL in your database)
-      
-    } catch (error) {
-      console.error('Error uploading file:', error);
+    const file = data.image[0];  // Get the first (and only) file
+  
+    if (!file) {
+      console.log('Image required')
+      return;  // Stop form submission if no image is provided
     }
+  
+    try {
+      // Convert the image file to Base64
+      const base64Image = await toBase64(file);
+  
+      // Prepare the payload to match the Lambda function's expected format
+      const payload = {
+        name: data.name,
+        greeting: data.greeting,
+        origin: data.origin,
+        image: {
+          name: file.name,
+          lastModified: file.lastModified,
+          size: file.size,
+          type: file.type,
+        },
+        base64Image: base64Image  // Send the Base64-encoded image
+      };
+  
+      console.log('Payload:', payload);
+  
+      // Send the payload using Axios
+      const response = await axios.post('https://4j46qca8c5.execute-api.us-east-2.amazonaws.com/Prod/send-birthday-wish', payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error.response ? error.response.data : error.message);
+    }
+  };
+  
+  // Function to convert the file to Base64
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(',')[1]); // Remove "data:image/png;base64," prefix
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (
@@ -36,16 +67,12 @@ const ReneeForm = () => {
       </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name">Name*: </label>
-
-        {/* use aria-invalid to indicate field contain error */}
         <input
           id="name"
           placeholder="So Renée knows who is sending this"
           aria-invalid={errors.name ? "true" : "false"}
           {...register("name", { required: true, maxLength: 50 })}
         />
-
-        {/* use role="alert" to announce the error message */}
         {errors.name && errors.name.type === "required" && (
           <span role="alert">This is required</span>
         )}
@@ -70,35 +97,35 @@ const ReneeForm = () => {
           placeholder="How did you and Renée meet. This can be a truthful story, or make something up, or feel free to leave it blank"
           {...register("origin")}
         />
-        <label htmlFor="origin">Favorite Renée Memory: </label>
-        <textarea
-          id="memory"
-          placeholder="Share a memory of Renée."
-          {...register("origin")}
-        />
 
-        <label htmlFor="images">Upload Image(s):</label>
+        <label htmlFor="image">Upload Image*:</label>
         <input
           type="file"
-          id="images"
+          id="image"
           accept="image/*"
-          multiple
-          {...register("images", {
+          {...register("image", {
+            required: "An image is required",  // Image is required
             validate: {
-              maxSize: (files) => {
-                if (files.length > 0) {
-                  for (let file of files) {
-                    if (file.size > 5 * 1024 * 1024) {
-                      return "Each file must be less than 3MB";
-                    }
-                  }
+              fileSize: (fileList) => {
+                const file = fileList[0];
+                if (!file) {
+                  return true; // No file selected, the "required" validation will catch it
                 }
-                return true;
+                return file.size <= 5 * 1024 * 1024 || "The file size must be less than 5MB";
+              },
+              fileType: (fileList) => {
+                const file = fileList[0];
+                if (!file) {
+                  return true; // No file selected, the "required" validation will catch it
+                }
+                return /image\/(jpeg|png|gif)/.test(file.type) || "Only JPEG, PNG, or GIF files are allowed";
               },
             },
           })}
         />
-        {errors.images && <span role="alert">{errors.images.message}</span>}
+        {errors.image && <span role="alert">{errors.image.message}</span>}
+
+
         <input className="form-submit-button" type="submit" />
       </form>
     </div>

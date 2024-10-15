@@ -9,11 +9,9 @@ const PirateMessage = () => {
     console.log('Handle this');
     axios({
       method: 'get',
-      url: 'https://on8s0m5zl9.execute-api.us-east-2.amazonaws.com/healthcheck',
+      url: 'https://4j46qca8c5.execute-api.us-east-2.amazonaws.com/Prod/healthcheck',
       headers: {
-        'Access-Control-Allow-Origin': '*', // This won't help unless the server responds with this header
         'Content-Type': 'application/json',
-        // Add other custom headers as needed
       }})
     .then(response => console.log(response.data))
     .catch(error => {

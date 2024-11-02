@@ -3,7 +3,7 @@
   flex-direction: row;
   gap: 3em;
 
-  @media (width <= 724px) {
+  @media (width <= 1024px) {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1em;

@@ -20,7 +20,7 @@ const PirateMessage = () => {
           the end of this all the well wishes, pictures, and memories will be
           compiled into a scrapbook for Renée.
         </p>
-        <p>Fill out the form <a href="https://forms.gle/95shuSQS2bpvCp5C6">here </a>by 16 Nov 2024.</p>
+        <p>Fill out the form <a href="https://forms.gle/95shuSQS2bpvCp5C6">here </a>by 16 Nov 2024. You can do it as individuals or as a group.</p>
       </div>
       <div className="pirate-image">
         <img src={pirateImage} alt="Renee the pirate and Dan as Quailman" />
